@@ -1,4 +1,10 @@
-import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Inject,
+  Injectable,
+  OnModuleInit,
+} from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { ClientGrpc } from '@nestjs/microservices';
@@ -20,6 +26,9 @@ export class TaskService implements OnModuleInit {
       response.pipe(
         map((res) => {
           if (res.error === true) {
+            if (res.errorMessage === 'task not found') {
+              throw new HttpException(res.errorMessage, HttpStatus.BAD_REQUEST);
+            }
             throw new Error(res.errorMessage);
           }
           return res;
@@ -27,7 +36,7 @@ export class TaskService implements OnModuleInit {
       );
       return response;
     } catch (err) {
-      console.log('getTaskByIdErr --->', err);
+      throw new Error(err.message);
     }
   }
 
@@ -40,6 +49,9 @@ export class TaskService implements OnModuleInit {
       response.pipe(
         map((res) => {
           if (res.error === true) {
+            if (res.errorMessage === 'tasks not found') {
+              throw new HttpException(res.errorMessage, HttpStatus.BAD_REQUEST);
+            }
             throw new Error(res.errorMessage);
           }
           return res;
@@ -47,7 +59,7 @@ export class TaskService implements OnModuleInit {
       );
       return response;
     } catch (err) {
-      console.log('paginateTaskErr --->');
+      throw new Error(err.message);
     }
   }
 
@@ -60,6 +72,12 @@ export class TaskService implements OnModuleInit {
       response.pipe(
         map((res) => {
           if (res.error === true) {
+            if (
+              res.errorMessage === 'task not found' ||
+              res.errorMessage === 'parent task not found'
+            ) {
+              throw new HttpException(res.errorMessage, HttpStatus.BAD_REQUEST);
+            }
             throw new Error(res.errorMessage);
           }
           return res;
@@ -67,7 +85,7 @@ export class TaskService implements OnModuleInit {
       );
       return response;
     } catch (err) {
-      console.log('updateTaskErr --->');
+      throw new Error(err.message);
     }
   }
 
@@ -77,6 +95,9 @@ export class TaskService implements OnModuleInit {
       response.pipe(
         map((res) => {
           if (res.error === true) {
+            if (res.errorMessage === 'task not found') {
+              throw new HttpException(res.errorMessage, HttpStatus.BAD_REQUEST);
+            }
             throw new Error(res.errorMessage);
           }
           return res;
@@ -84,7 +105,7 @@ export class TaskService implements OnModuleInit {
       );
       return response;
     } catch (err) {
-      console.log('deleteTaskErr --->');
+      throw new Error(err.message);
     }
   }
 
@@ -94,6 +115,9 @@ export class TaskService implements OnModuleInit {
       response.pipe(
         map((res) => {
           if (res.error === true) {
+            if (res.errorMessage === 'parent task not found') {
+              throw new HttpException(res.errorMessage, HttpStatus.BAD_REQUEST);
+            }
             throw new Error(res.errorMessage);
           }
           return res;
@@ -101,7 +125,7 @@ export class TaskService implements OnModuleInit {
       );
       return response;
     } catch (err) {
-      console.log('createTaskErr---->');
+      throw new Error(err.message);
     }
   }
 }
