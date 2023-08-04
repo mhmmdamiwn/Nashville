@@ -13,6 +13,7 @@ export class TaskService implements OnModuleInit {
   onModuleInit() {
     this.taskService = this.client.getService<taskService>('TasksServiceProto');
   }
+
   async getTaskById(id: string) {
     try {
       const response = this.taskService.GetTaskById({ id });

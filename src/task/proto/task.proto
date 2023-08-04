@@ -20,36 +20,36 @@ message PaginationOptions{
 }
 
 message ResponseMessage{
-  string message = 1;
-  bool error =2 ;
+  string message      = 1;
+  bool   error        = 2;
   string errorMessage = 3;
 }
 
 message Task {
-  string id = 1;
-  string parentId = 2;
-  string title = 3;
-  string description = 4;
-  bool error = 5;
+  string id           = 1;
+  string parentId     = 2;
+  string title        = 3;
+  string description  = 4;
+  bool   error        = 5;
   string errorMessage = 6;
 }
 
 message CreateTaskInput {
-  string parentId = 2;
-  required string title = 3;
-  required string description = 4; 
+           string parentId    = 1;
+  required string title       = 2;
+  required string description = 3; 
 }
 
 message UpdateTaskInput{
-  required string id =1;
-  string parentId = 2;
-  string title = 3;
-  string description = 4; 
+  required string id          = 1;
+           string parentId    = 2;
+           string title       = 3;
+           string description = 4; 
 }
 
 
 message Tasks{
-  repeated Task tasks = 1;
-  bool error = 2;
-  string errorMessage = 3;
+  repeated Task   tasks        = 1;
+           bool   error        = 2;
+           string errorMessage = 3;
 }

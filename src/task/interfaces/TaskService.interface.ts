@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
-import { ResponseMessage } from './ResponseMessage.interface';
-import { ResponseTask } from './TaskResponse.interface';
-import { Tasks } from './Tasks.interface';
+
+// interfaces
+import { ResponseMessage, ResponseTask, Tasks } from '.';
 
 export interface taskService {
   GetTaskById(data: { id: string }): Observable<ResponseTask>;
